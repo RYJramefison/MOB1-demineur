@@ -1,4 +1,3 @@
-// components/box.tsx
 import { boxStyles } from "@/styles/box-styles";
 import React, { FC } from "react";
 import { Image, Pressable, Text } from "react-native";
@@ -14,7 +13,7 @@ interface BoxProps {
   index1: number;
   index2: number;
   onPress: (i: number, j: number) => void;
-  revealAll?: boolean; // when true show everything (used on game over)
+  revealAll?: boolean; 
 }
 
 const numberColors: Record<string, string> = {
@@ -29,13 +28,11 @@ const numberColors: Record<string, string> = {
 export const Box: FC<BoxProps> = ({ cell, index1, index2, onPress, revealAll = false }) => {
   const show = revealAll || cell.revealed;
 
-  // default (not revealed) background color as requested: #1bb5fc
   const baseStyle = {
     ...boxStyles.squareBox,
     backgroundColor: show ? "#858889" : "#1bb5fc",
   };
 
-  // If revealed and bomb -> show bomb image
   if (show && cell.bomb) {
     return (
       <Pressable onPress={() => onPress(index1, index2)} style={baseStyle}>
@@ -48,7 +45,6 @@ export const Box: FC<BoxProps> = ({ cell, index1, index2, onPress, revealAll = f
     );
   }
 
-  // If revealed and adjacent>0 -> show number with color depending on adjacent
   if (show && !cell.bomb && cell.adjacent > 0) {
     const color = numberColors[String(cell.adjacent)] ?? "#000";
     return (
@@ -58,6 +54,5 @@ export const Box: FC<BoxProps> = ({ cell, index1, index2, onPress, revealAll = f
     );
   }
 
-  // revealed and adjacent === 0 => plain grey
   return <Pressable onPress={() => onPress(index1, index2)} style={baseStyle} />;
 };

@@ -1,20 +1,14 @@
-// utilities/create-board.ts
 export interface Cell {
     revealed: boolean;
     bomb: boolean;
     adjacent: number;
   }
-  
-  /**
-   * Create an empty board (size x size) with exactly `bombCount` bombs placed randomly.
-   */
+
   export const createBoard = (size: number, bombCount: number): Cell[][] => {
-    // create empty cells
-    const board: Cell[][] = new Array(size).fill(null).map(() =>
+      const board: Cell[][] = new Array(size).fill(null).map(() =>
       new Array(size).fill(null).map(() => ({ revealed: false, bomb: false, adjacent: 0 }))
     );
   
-    // place bombs randomly
     let placed = 0;
     const total = size * size;
     const used = new Set<number>();
@@ -28,7 +22,6 @@ export interface Cell {
       placed++;
     }
   
-    // compute adjacent counts
     for (let i = 0; i < size; i++) {
       for (let j = 0; j < size; j++) {
         if (board[i][j].bomb) {
@@ -44,9 +37,7 @@ export interface Cell {
   
   export const createNewBoard = (size: number, bombCount: number) => createBoard(size, bombCount);
   
-  /**
-   * Count bombs around (i,j)
-   */
+
   const countAdjacents = (board: Cell[][], i: number, j: number) => {
     const dirs = [
       [-1, -1],
@@ -80,10 +71,8 @@ export interface Cell {
     const board = boardInput.map(row => row.map(cell => ({ ...cell })));
     const size = board.length;
   
-    // If already revealed do nothing
     if (board[i][j].revealed) return { newBoard: board, exploded: false };
   
-    // If bomb -> reveal all
     if (board[i][j].bomb) {
       for (let x = 0; x < size; x++) {
         for (let y = 0; y < size; y++) {

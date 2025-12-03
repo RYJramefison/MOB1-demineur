@@ -14,4 +14,8 @@ export const boxStyles = StyleSheet.create({
     width: 16,
     height: 16,
   },
+  bigBombImage: {
+    width: 50,
+    height: 50,
+  },
 });
