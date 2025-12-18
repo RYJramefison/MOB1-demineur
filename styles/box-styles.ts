@@ -1,4 +1,3 @@
-// styles/box-styles.ts
 import { StyleSheet } from "react-native";
 
 export const boxStyles = StyleSheet.create({
@@ -13,9 +12,5 @@ export const boxStyles = StyleSheet.create({
   bombImage: {
     width: 16,
     height: 16,
-  },
-  bigBombImage: {
-    width: 50,
-    height: 50,
   },
 });

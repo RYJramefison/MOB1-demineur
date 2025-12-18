@@ -2,9 +2,9 @@ import { Box } from "@/components/box";
 import { demineurStyles } from "@/styles/demineur-styles";
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
-import { Cell, createBoard, revealCellAt } from "../utilities/create-board";
+import { Cell, createBoard, revealCellAt } from "../../utilities/create-board";
 
-export function Demineur() {
+export default function Demineur() {
   const [board, setBoard] = useState<Cell[][]>(() => createBoard(20, 40));
   const [gameOver, setGameOver] = useState(false);
 
