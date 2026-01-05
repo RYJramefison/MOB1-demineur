@@ -1,5 +1,6 @@
 import { indexStyles } from "@/styles/index-styles";
 import { Link } from "expo-router";
+import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
 
 export default function Home() {

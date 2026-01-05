@@ -1,6 +1,7 @@
 import { OptionStyles } from "@/styles/option-styles";
 import Slider from "@react-native-community/slider";
-import { useState } from "react";
+import { Audio } from "expo-av";
+import { useEffect, useState } from "react";
 import { Switch, Text, View } from "react-native";
 
 type Difficulty = "Easy" | "Medium" | "Hard";
@@ -10,10 +11,48 @@ export default function Option() {
   const [vibration, setVibration] = useState(true);
   const [difficulty, setDifficulty] = useState<Difficulty>("Easy");
   const [gridSize, setGridSize] = useState(8); // nombre de cases par ligne
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+
+  useEffect(() => {
+    let backgroundSound: Audio.Sound;
+
+    const loadSound = async () => {
+      if (isSoundEnabled) {
+        const { sound } = await Audio.Sound.createAsync(
+          require("@/assets/sounds/game-music.mp3")
+        );
+        backgroundSound = sound;
+        setSound(sound);
+        await backgroundSound.playAsync();
+        backgroundSound.setIsLoopingAsync(true);
+      }
+    };
+
+    loadSound();
+
+    return () => {
+      if (backgroundSound) {
+        backgroundSound.unloadAsync();
+      }
+    };
+  }, [isSoundEnabled]);
+
+  useEffect(() => {
+    if (sound) {
+      sound.setVolumeAsync(volume / 100);
+    }
+  }, [volume, sound]);
 
   return (
     <View style={OptionStyles.container}>
       <Text style={OptionStyles.title}>Options</Text>
+
+      {/* Activer/Désactiver le son */}
+      <View style={OptionStyles.optionRow}>
+        <Text style={OptionStyles.label}>Enable Sound</Text>
+        <Switch value={isSoundEnabled} onValueChange={setIsSoundEnabled} />
+      </View>
 
       {/* Volume */}
       <View style={OptionStyles.optionBlock}>
@@ -26,6 +65,7 @@ export default function Option() {
           step={1}
           value={volume}
           onValueChange={setVolume}
+          disabled={!isSoundEnabled} // Désactiver le slider si le son est désactivé
         />
       </View>
 
