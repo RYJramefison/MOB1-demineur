@@ -1,11 +1,18 @@
 import { Box } from "@/components/box";
+import { useGame } from "@/contexts/GameContext";
 import { demineurStyles } from "@/styles/demineur-styles";
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
 import { Cell, createBoard, revealCellAt } from "../../utilities/create-board";
 
 export default function Demineur() {
-  const [board, setBoard] = useState<Cell[][]>(() => createBoard(20, 40));
+  const { config, difficulty } = useGame();
+  const { rows, cols, bombs } = config;
+
+  const [board, setBoard] = useState<Cell[][]>(() =>
+    createBoard(rows, bombs)
+  );
+
   const [gameOver, setGameOver] = useState(false);
 
   const handlePress = (i: number, j: number) => {
@@ -18,8 +25,8 @@ export default function Demineur() {
     }
   };
 
-  const handleRestart = () => {
-    setBoard(createBoard(20, 40));
+    const handleRestart = () => {
+    setBoard(createBoard(rows, bombs));
     setGameOver(false);
   };
 
@@ -27,7 +34,7 @@ export default function Demineur() {
 
   return (
     <View style={demineurStyles.container}>
-      <Text style={demineurStyles.title}>Démineur 20 x 20</Text>
+      <Text style={demineurStyles.title}>Démineur {difficulty} - {rows} x {cols}</Text>
 
       <View>
         {board.map((row, i) => (
