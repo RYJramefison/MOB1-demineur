@@ -51,7 +51,14 @@ export default function Option() {
               difficulty === level && OptionStyles.activeDifficulty,
             ]}
           >
-            <Text>{level}</Text>
+            <Text
+              style={[
+                OptionStyles.difficultyText,
+                difficulty === level && OptionStyles.activeDifficultyText,
+              ]}
+            >
+              {level}
+            </Text>
           </Pressable>
         ))}
       </View>

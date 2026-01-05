@@ -75,40 +75,51 @@ export default function Demineur() {
 
   const unrevealedNonBombs = board.flat().filter(c => !c.revealed && !c.bomb).length;
 
-  return (
-    <View style={demineurStyles.container}>
-      <Text style={demineurStyles.title}>Démineur {difficulty} - {rows} x {cols}</Text>
-
-      <View>
-        {board.map((row, i) => (
-          <View key={`row-${i}`} style={demineurStyles.horizontalView}>
-            {row.map((cell, j) => (
-              <Box
-                key={`box-${i}-${j}`}
-                cell={cell}
-                index1={i}
-                index2={j}
-                onPress={handlePress}
-                revealAll={gameOver} 
-              />
-            ))}
-          </View>
-        ))}
-      </View>
-
-      {gameOver ? (
-        <View style={demineurStyles.footer}>
-          <Text style={demineurStyles.gameOverText}>Game Over — Vous avez touché une bombe</Text>
-          <Button title="Recommencer" onPress={handleRestart} />
-        </View>
-      ) : (
-        <View style={demineurStyles.footer}>
-          <Text style={demineurStyles.text}>Cases restantes: {unrevealedNonBombs}</Text>
-          <Button title="Recommencer" onPress={handleRestart} />
-        </View>
-      )}
+  return ( <View style={demineurStyles.container}>
+    {/* 🎄 HEADER */}
+    <View style={demineurStyles.header}>
+      <Text style={demineurStyles.title}>🎄 Démineur</Text>
+      <Text style={demineurStyles.subTitle}>
+        {difficulty} • {rows} x {cols}
+      </Text>
     </View>
-  );
+
+    {/* 🎮 BOARD */}
+    <View style={demineurStyles.board}>
+      {board.map((row, i) => (
+        <View key={`row-${i}`} style={demineurStyles.horizontalView}>
+          {row.map((cell, j) => (
+            <Box
+              key={`box-${i}-${j}`}
+              cell={cell}
+              index1={i}
+              index2={j}
+              onPress={handlePress}
+              revealAll={gameOver}
+            />
+          ))}
+        </View>
+      ))}
+    </View>
+
+    {/* 🎁 FOOTER */}
+    <View style={demineurStyles.footer}>
+      {gameOver ? (
+        <Text style={demineurStyles.gameOverText}>
+          💥 Game Over — Bombe touchée
+        </Text>
+      ) : (
+        <Text style={demineurStyles.infoText}>
+          🎁 Cases restantes : {unrevealedNonBombs}
+        </Text>
+      )}
+
+      <View style={demineurStyles.restartButton}>
+        <Button title="Recommencer 🎄" onPress={handleRestart} />
+      </View>
+    </View>
+  </View>
+);
 }
 
 

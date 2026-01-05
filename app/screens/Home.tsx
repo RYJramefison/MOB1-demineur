@@ -28,7 +28,10 @@ export default function Home() {
         </Link>
       </Pressable>
 
-      <Pressable style={indexStyles.menuButton} onPress={() => impact()}>
+      <Pressable
+        style={[indexStyles.menuButton, indexStyles.menuButtonAlt]}
+        onPress={() => impact()}
+      >
         <Link href="/screens/HelpGame">
           <Text style={indexStyles.menuText}>Help</Text>
         </Link>
