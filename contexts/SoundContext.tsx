@@ -40,19 +40,19 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
     };
   
     handleSound();
-  }, [isEnabled]);
+  }, [isEnabled, sound, volume]);
   
   useEffect(() => {
     if (sound) {
       sound.setVolumeAsync(volume);
     }
-  }, [volume]);
+  }, [volume, sound]);
 
   useEffect(() => {
     if (sound) {
       sound.setVolumeAsync(volume);
     }
-  }, [volume]);
+  }, [volume, sound]);
 
   return (
     <SoundContext.Provider
